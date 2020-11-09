@@ -7,10 +7,10 @@
     <modules>
         <module>his-commons</module>
         <module>his-system</module>
-        <module>system-api</module>
-        <module>system-domain</module>
-        <module>system-mapper</module>
-        <module>system-service</module>
+        <module>his-system/system-api</module>
+        <module>his-system/system-domain</module>
+        <module>his-system/system-mapper</module>
+        <module>his-system/system-service</module>
     </modules>
     <!--依赖springboot 版本-->
     <parent>
@@ -19,7 +19,7 @@
         <version>2.2.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.llliu</groupId>
+    <groupId>top.llliu</groupId>
     <artifactId>open-his</artifactId>
     <version>1.0-SNAPSHOT</version>
     <description>门诊管理系统</description>
