@@ -11,6 +11,9 @@
         <module>his-system/system-domain</module>
         <module>his-system/system-mapper</module>
         <module>his-system/system-service</module>
+        <module>his-erp</module>
+        <module>his-doctor</module>
+        <module>his-statistics</module>
     </modules>
     <!--依赖springboot 版本-->
     <parent>
