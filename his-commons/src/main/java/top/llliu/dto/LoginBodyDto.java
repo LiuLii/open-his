@@ -1,10 +1,26 @@
 package top.llliu.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+
 /**
  * @author liuli
  * @version 1.0
  * Filename:ApiAdminConfig.java
  * Desc:
  */
-public class LoginBodyDto {
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class LoginBodyDto implements Serializable {
+  //  用户名
+  private String username;
+  //  密码
+  private String password;
+  // 验证码
+  private String code;
 }
