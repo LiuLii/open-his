@@ -5,6 +5,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,7 +39,7 @@ public class LoginController {
   private MenuService menuService;
 
   @PostMapping("login/doLogin")
-  public AjaxResult login(@RequestBody LoginBodyDto loginBodyDto, HttpServletRequest request){
+  public AjaxResult login(@RequestBody @Validated LoginBodyDto loginBodyDto, HttpServletRequest request){
     AjaxResult ajax = AjaxResult.success();
     String username = loginBodyDto.getUsername();
     String password = loginBodyDto.getPassword();
@@ -78,20 +79,30 @@ public class LoginController {
   /**
    * 用户退出
    */
+  @PostMapping("login/logout")
   public AjaxResult logout(){
     Subject subject = SecurityUtils.getSubject();
     subject.logout();
     return AjaxResult.success("用户退出成功");
   }
 
+  /**
+   * 获取菜单
+   * @return
+   */
+  @GetMapping("login/getMenus")
   public AjaxResult getMenus(){
+    //获取shiro登录主体
     Subject subject = SecurityUtils.getSubject();
+    // 通过凭证 获取用户信息
     ActiverUser activerUser= (ActiverUser) subject.getPrincipal();
     boolean isAdmin=activerUser.getUser().getUserType().equals(Constants.USER_ADMIN);
     SimpleUser simpleUser=null;
-    if(isAdmin){
+    if(!isAdmin){
+      // 如果不是管理员，需要获取用户的基本信息
       simpleUser=new SimpleUser(activerUser.getUser().getUserId(),activerUser.getUser().getUserName());
     }
+    // 通过用户的基本信息获取 菜单权限
     List<Menu> menus = menuService.selectMenuTree(isAdmin,simpleUser);
     List<MenuTreeVo> menuVos=new ArrayList<>();
     for (Menu menu : menus) {
